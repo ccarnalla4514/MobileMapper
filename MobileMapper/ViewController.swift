@@ -86,11 +86,19 @@ let region = MKCoordinateRegion(center: center, span: span)
         var currentMapItem = MKMapItem()
         if let coordinate = view.annotation?.coordinate {
             for mapItem in parks {
+                if mapItem.placemark.coordinate.latitude == coordinate.latitude && mapItem.placemark.coordinate.longitude == coordinate.longitude {
+                    
+                
                 currentMapItem = mapItem
             }
         }
-        let placemark = currentMapItem
-        if let parkName = placemark.name, let streetNumber =  placemark.subThouroughFare, let streetName = placemark.subThouroughFare {
+        }
+        let placemark = currentMapItem.placemark
+        if let parkName = placemark.name, let streetNumber =  placemark.subThoroughfare, let streetName = placemark.subThoroughfare {
+            let streetAddress = streetNumber + "" + streetName
+            let alert = UIAlertController(title: parkName, message: streetAddress, preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: nil))
+            present(alert, animated: true, completion: nil)
             
         }
     }
